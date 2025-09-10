@@ -1,0 +1,26 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Termux history
+.history
+
+# IDE/editor configs
+.vscode/
+.idea/
+
+# Logs and temp files
+*.log
+*.tmp
+
+# Screenshot folder (optional)
+screenshots/
+
+# Environment files (if you ever use them)
+.env

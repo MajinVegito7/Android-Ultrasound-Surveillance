@@ -1,0 +1,23 @@
+import numpy as np
+import sounddevice as sd
+import scipy.signal as signal
+
+SAMPLE_RATE = 44100  # Hz
+DURATION = 5  # seconds
+FREQ_RANGE = (18000, 22000)  # ultrasonic band
+
+def detect_ultrasound():
+    print("Listening for ultrasonic signals...")
+    recording = sd.rec(int(SAMPLE_RATE * DURATION), samplerate=SAMPLE_RATE, channels=1, dtype='float64')
+    sd.wait()
+
+    freqs, times, Sxx = signal.spectrogram(recording[:, 0], SAMPLE_RATE)
+    detected = any(FREQ_RANGE[0] <= f <= FREQ_RANGE[1] and np.max(Sxx[i]) > 0.01 for i, f in enumerate(freqs))
+
+    if detected:
+        print("⚠️ Ultrasound activity detected in range 18–22 kHz.")
+    else:
+        print("✅ No ultrasonic activity detected.")
+
+if __name__ == "__main__":
+    detect_ultrasound()
